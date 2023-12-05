@@ -30,7 +30,7 @@ export default function Featured({ type, setGenre }) {
   useEffect(() => {
   const getSpideyContent = async () => {
     try {
-      const res = await axios.get("/movies/find/64e43ffba4dcec934420c857", {
+      const res = await axios.get(process.env.REACT_APP_API_URL+"movies/find/64e43ffba4dcec934420c857", {
         headers: {
           token:
             "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
