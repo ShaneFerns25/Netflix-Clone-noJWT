@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const Movie = require("../models/Movie");
-const verify = require("../verifyToken");
+// const verify = require("../verifyToken");
 
 //CREATE
-router.post("/", verify, async (req, res) => {
+router.post("/", async (req, res) => {
   if (req.user.isAdmin) {
     const newMovie = new Movie(req.body);
     try {
@@ -19,7 +19,7 @@ router.post("/", verify, async (req, res) => {
 
 //UPDATE
 
-router.put("/:id", verify, async (req, res) => {
+router.put("/:id", async (req, res) => {
   if (req.user.isAdmin) {
     try {
       const updatedMovie = await Movie.findByIdAndUpdate(
@@ -39,7 +39,7 @@ router.put("/:id", verify, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verify, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   if (req.user.isAdmin) {
     try {
       await Movie.findByIdAndDelete(req.params.id);
@@ -54,7 +54,7 @@ router.delete("/:id", verify, async (req, res) => {
 
 //GET
 
-router.get("/find/:id", verify, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     res.status(200).json(movie);
@@ -65,7 +65,7 @@ router.get("/find/:id", verify, async (req, res) => {
 
 //GET RANDOM
 
-router.get("/random", verify, async (req, res) => {
+router.get("/random", async (req, res) => {
   const type = req.query.type;
   let movie;
   try {
@@ -88,7 +88,7 @@ router.get("/random", verify, async (req, res) => {
 
 //GET ALL
 
-router.get("/", verify, async (req, res) => {
+router.get("/", async (req, res) => {
   if (req.user.isAdmin) {
     try {
       const movies = await Movie.find();
